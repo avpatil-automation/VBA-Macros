@@ -1,8 +1,16 @@
 Sub CheckForNAs()
-'Purpose: Check for #N/As in current sheet
+'Purpose: Check for #N/As in the current sheet
 On Error GoTo err
-    Cells.SpecialCells(xlCellTypeFormulas, xlErrors).Select
-Exit Sub
+    Dim errorRange As Range
+    Set errorRange = Cells.SpecialCells(xlCellTypeFormulas, xlErrors)
+    
+    If Not errorRange Is Nothing Then
+        errorRange.Select
+    Else
+        MsgBox "No Errors Here!"
+    End If
+    Exit Sub
+
 err:
-    If err.Number = 1004 Then MsgBox "No Errors Here!"
+    MsgBox "An error occurred: " & Err.Description
 End Sub
